@@ -24,7 +24,7 @@ namespace AudioRecorder
         public MainWindow()
         {
             InitializeComponent();
-            _recordingsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Recordings");
+            _recordingsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             if (!Directory.Exists(_recordingsFolder))
             {
                 Directory.CreateDirectory(_recordingsFolder);
@@ -220,6 +220,27 @@ namespace AudioRecorder
                         }
                     }
                 });
+            }
+        }
+
+        private void OpenFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string folderPath = Path.GetDirectoryName(_selectedFilePath) ?? _recordingsFolder;
+                if (Directory.Exists(folderPath))
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = "explorer.exe",
+                        Arguments = folderPath,
+                        UseShellExecute = true
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"打开文件夹失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
