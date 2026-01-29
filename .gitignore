@@ -48,3 +48,7 @@ _ReSharper*/
 nul
 *.log
 *.tmp
+
+# Build artifacts
+publish/
+*.zip
