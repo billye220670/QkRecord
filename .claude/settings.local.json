@@ -8,7 +8,8 @@
       "Bash(git add:*)",
       "Bash(git push:*)",
       "Bash(gh release create v1.0.0 QkRecord-v1.0.0-win-x64.zip --title \"QkRecord v1.0.0\" --notes \"$\\(cat <<''EOF''\n# QkRecord v1.0.0 - Audio Recorder\n\n首个发布版本！\n\n## 功能特性\n\n- 🎙️ 高质量音频录制\n- 🔊 系统音频环回录制支持\n- 💾 MP3格式输出\n- 🎨 简洁的WPF用户界面\n- 📦 单文件自包含发布（无需安装.NET运行时）\n\n## 系统要求\n\n- Windows 10/11 \\(x64\\)\n\n## 使用方法\n\n1. 下载 `QkRecord-v1.0.0-win-x64.zip`\n2. 解压到任意目录\n3. 运行 `Listener.exe`\n\n## 技术栈\n\n- .NET 6.0\n- WPF\n- NAudio\n- NAudio.Lame\nEOF\n\\)\")",
-      "Bash(dotnet publish:*)"
+      "Bash(dotnet publish:*)",
+      "Bash(git commit:*)"
     ]
   },
   "hooks": {
@@ -18,8 +19,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "dotnet build && dotnet run",
-            "statusMessage": "Building and running application..."
+            "command": "powershell -NoProfile -Command \"Stop-Process -Name QkRecord -ErrorAction SilentlyContinue -Force\" ; dotnet build && dotnet run",
+            "statusMessage": "Stopping running instance (if any), then building and running application..."
           }
         ]
       },
@@ -28,8 +29,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "dotnet build && dotnet run",
-            "statusMessage": "Building and running application..."
+            "command": "powershell -NoProfile -Command \"Stop-Process -Name QkRecord -ErrorAction SilentlyContinue -Force\" ; dotnet build && dotnet run",
+            "statusMessage": "Stopping running instance (if any), then building and running application..."
           }
         ]
       }
