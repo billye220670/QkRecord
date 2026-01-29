@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet run:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dotnet build && dotnet run",
+            "statusMessage": "Building and running application..."
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dotnet build && dotnet run",
+            "statusMessage": "Building and running application..."
+          }
+        ]
+      }
+    ]
+  }
+}

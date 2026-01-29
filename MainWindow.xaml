@@ -1,0 +1,151 @@
+<Window x:Class="AudioRecorder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="内录" Height="340" Width="420"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Topmost="True"
+        Background="Transparent">
+
+    <Border Background="#F3F3F3" CornerRadius="12" Padding="0">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" Direction="270" ShadowDepth="3" Opacity="0.15" BlurRadius="20"/>
+        </Border.Effect>
+
+        <Grid>
+            <!-- 标题栏 -->
+            <Border Background="#FAFAFA" CornerRadius="12,12,0,0" Height="48" VerticalAlignment="Top"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid>
+                    <TextBlock Text="音频录制器"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="#202020"
+                               VerticalAlignment="Center"
+                               Margin="20,0,0,0"/>
+
+                    <Button x:Name="CloseButton"
+                            Content="✕"
+                            Width="46"
+                            Height="48"
+                            HorizontalAlignment="Right"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="#606060"
+                            FontSize="16"
+                            Cursor="Hand"
+                            Click="CloseButton_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="0,12,0,0">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E81123"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- 主内容区 -->
+            <Grid Margin="24,68,24,24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- 录音按钮 -->
+                <Button x:Name="RecordButton"
+                        Grid.Row="0"
+                        Width="140"
+                        Height="140"
+                        Click="RecordButton_Click"
+                        Cursor="Hand"
+                        Background="#0078D4"
+                        BorderThickness="0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid Width="140" Height="140">
+                                <Ellipse x:Name="ButtonEllipse"
+                                         Width="140"
+                                         Height="140"
+                                         Fill="{TemplateBinding Background}">
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" Opacity="0.2" BlurRadius="16"/>
+                                    </Ellipse.Effect>
+                                </Ellipse>
+                                <Ellipse x:Name="InnerEllipse"
+                                         Width="120"
+                                         Height="120"
+                                         Fill="Transparent"
+                                         Stroke="White"
+                                         StrokeThickness="3"
+                                         Opacity="0.3"/>
+                                <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Path x:Name="IconPath"
+                                          Data="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"
+                                          Fill="White"
+                                          Stretch="Uniform"
+                                          Width="40"
+                                          Height="40"/>
+                                    <TextBlock x:Name="TimeText"
+                                               Text=""
+                                               Foreground="White"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Visibility="Collapsed"/>
+                                </Grid>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="ButtonEllipse" Property="Fill" Value="#005A9E"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="ButtonEllipse" Property="Fill" Value="#004275"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 文件路径超链接 -->
+                <TextBlock x:Name="FilePathText"
+                           Grid.Row="1"
+                           Foreground="#0067C0"
+                           FontSize="12"
+                           HorizontalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"
+                           TextWrapping="Wrap"
+                           MaxHeight="40"
+                           Margin="0,20,0,0"
+                           Cursor="Hand"
+                           TextDecorations="Underline"
+                           MouseLeftButtonDown="FilePathText_Click">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#005A9E"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
